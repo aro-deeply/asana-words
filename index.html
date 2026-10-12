@@ -108,7 +108,9 @@ button:focus-visible{outline:2px solid var(--ink);outline-offset:2px;border-radi
 .wmore{padding:0 16px 16px;display:flex;flex-direction:column;gap:12px}
 .spk{width:40px;height:40px;border-radius:50%;background:var(--bg);display:inline-grid;place-items:center;flex:none;color:var(--ink)}
 .spk svg{width:18px;height:18px}
-.rel{display:flex;flex-direction:column;gap:5px}
+.rel{display:grid;grid-template-columns:92px 1fr;gap:12px;align-items:start}
+.rel-b{min-width:0;display:flex;flex-direction:column;gap:4px}
+.fig{width:92px;height:72px;display:block;background:var(--t,var(--bg));color:var(--ti,var(--ink));border-radius:12px}
 .rel-n{font-family:var(--la);font-weight:600;font-size:15px}
 .rel-k{font-size:14px;color:var(--muted)}
 .parts{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px}
@@ -194,7 +196,7 @@ const W=[
 {c:'act',s:'uttāna',r:'욷타나',m:'깊게 펼친',d:'उत्तान',ex:[{n:'Uttānāsana',k:'서서 앞으로 숙이는 자세',p:['uttāna']},{n:'Pārśvottānāsana',k:'다리를 앞뒤로 벌리고 앞다리 쪽으로 숙이는 자세',p:['pārśva','uttāna']}]},
 {c:'act',s:'utkaṭa',r:'웃카타',m:'강렬한',d:'उत्कट',ex:[{n:'Utkaṭāsana',k:'의자 자세',p:['utkaṭa']}]},
 {c:'act',s:'daṇḍa',r:'단다',m:'막대기',d:'दण्ड',ex:[{n:'Daṇḍāsana',k:'다리를 앞으로 뻗고 곧게 앉는 자세',p:['daṇḍa']},{n:'Caturaṅga Daṇḍāsana',k:'팔을 굽혀 몸을 바닥과 나란히 버티는 자세',p:[['caturaṅga','네 팔다리'],'daṇḍa']}]},
-{c:'act',s:'namaskāra',r:'나마스카라',m:'경배',d:'नमस्कार',ex:[{n:'Sūrya Namaskāra',k:'태양 경배 (연속 동작)',p:[['sūrya','태양'],'namaskāra']}]},
+{c:'act',s:'namaskāra',r:'나마스카라',m:'경배',d:'नमस्कार',ex:[{n:'Sūrya Namaskāra',k:'태양 경배 연속 동작 (그림은 시작할 때 합장 자세)',p:[['sūrya','태양'],'namaskāra']}]},
 {c:'act',s:'bandha',r:'반다',m:'잠금',d:'बन्ध',ex:[{n:'Setu Bandha Sarvāṅgāsana',k:'누워서 엉덩이를 들어 올리는 브릿지 자세',p:['setu','bandha',['sarvāṅga','온몸']]}]},
 {c:'shape',s:'trikoṇa',r:'트리코나',m:'삼각형',d:'त्रिकोण',ex:[{n:'Utthita Trikoṇāsana',k:'삼각 자세',p:['utthita','trikoṇa']},{n:'Parivṛtta Trikoṇāsana',k:'회전 삼각 자세',p:['parivṛtta','trikoṇa']}]},
 {c:'shape',s:'padma',r:'파드마',m:'연꽃',d:'पद्म',ex:[{n:'Padmāsana',k:'연꽃 자세 (결가부좌)',p:['padma']}]},
@@ -214,7 +216,7 @@ const W=[
 {c:'animal',s:'kapota',r:'카포타',m:'비둘기',d:'कपोत',ex:[{n:'Kapotāsana',k:'무릎을 꿇고 깊게 뒤로 젖히는 비둘기 자세',p:['kapota']},{n:'Eka Pāda Rājakapotāsana',k:'한 발 왕비둘기 자세',p:[['eka','하나'],'pāda',['rāja','왕'],'kapota']}]},
 {c:'animal',s:'uṣṭra',r:'우슈트라',m:'낙타',d:'उष्ट्र',ex:[{n:'Uṣṭrāsana',k:'무릎을 세우고 뒤로 젖히는 낙타 자세',p:['uṣṭra']}]},
 {c:'myth',s:'vīra',r:'비라',m:'전사',d:'वीर',ex:[{n:'Vīrāsana',k:'무릎을 꿇고 두 발 사이에 앉는 자세',p:['vīra']},{n:'Supta Vīrāsana',k:'비라아사나에서 뒤로 눕는 자세',p:['supta','vīra']}]},
-{c:'myth',s:'vīrabhadra',r:'비라바드라',m:'비라바드라',d:'वीरभद्र',ex:[{n:'Vīrabhadrāsana I · II · III',k:'전사 자세 1·2·3',p:['vīrabhadra']}]},
+{c:'myth',s:'vīrabhadra',r:'비라바드라',m:'비라바드라',d:'वीरभद्र',ex:[{n:'Vīrabhadrāsana I · II · III',k:'전사 자세 1·2·3 (그림은 2번)',p:['vīrabhadra']}]},
 {c:'myth',s:'hanumān',r:'하누만',m:'원숭이',d:'हनुमान्',ex:[{n:'Hanumānāsana',k:'다리를 앞뒤로 찢어 앉는 자세',p:['hanumān']}]},
 {c:'myth',s:'matsyendra',r:'맛시엔드라',m:'물고기',d:'मत्स्येन्द्र',ex:[{n:'Ardha Matsyendrāsana',k:'앉아서 상체를 비트는 자세',p:['ardha','matsyendra']}]},
 {c:'myth',s:'bharadvāja',r:'바라드바자',m:'베다 현자',d:'भरद्वाज',ex:[{n:'Bharadvājāsana',k:'앉아서 상체를 비트는 자세',p:['bharadvāja']}]},
@@ -250,10 +252,82 @@ function speak(id){
 const spk=id=>`<button class="spk" data-act="speak" data-id="${id}" aria-label="${esc(W[id].s)} 발음 듣기">${ICON.spk}</button>`;
 let tt;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),2400)}
 
+/* 자세 그림: 관절 각도로 그리는 단순한 사람 모양. 각도는 도(0=오른쪽, 90=아래, -90=위). 기준점은 엉덩이(0,0) */
+const FL={B:23,N:7.5,R:5,T:19,S:19,Ft:5,U:12.5,F:12};
+const POSES={
+'Adho Mukha Śvānāsana':{t:42,hd:58,L:[[110,110,0],[113,113,0]],A:[{to:[33,32.5]},{to:[35,32.5]}]},
+'Ūrdhva Mukha Śvānāsana':{t:-48,t2:-62,hd:-78,L:[[166,172,180],[168,173,180]],A:[{to:[17,8.5]},{to:[18,8.5]}]},
+'Ūrdhva Hastāsana':{front:1,t:-90,hd:-90,L:[[87,88,0],[93,92,180]],A:[[-55,-68],[-125,-112]]},
+'Ardha Matsyendrāsana':{t:-90,hd:-90,L:[[-55,92,0],[8,176]],A:[[40,-62],{to:[-11,6],b:-1}]},
+'Pārśvottānāsana':{t:48,hd:62,L:[[70,70,0],[110,110,0]],A:[{to:[24,35.5],b:-1},{to:[26,35.5],b:-1}]},
+'Parivṛtta Trikoṇāsana':{t:25,hd:25,L:[[62,62,0],[118,118,0]],A:[{to:[22,33],b:1},[-90,-90]]},
+'Supta Vīrāsana':{t:180,hd:183,L:[[-8,173,180],[-6,175,180]],A:[[-150,178],[-145,176]]},
+'Utthita Trikoṇāsana':{front:1,t:-14,hd:-14,L:[[60,60,0],[120,120,180]],A:[{to:[24,28],b:1},[-90,-90]]},
+'Prasārita Pādottānāsana':{front:1,t:90,hd:90,L:[[69,69,0],[111,111,180]],A:[{to:[9,35.5],b:-1},{to:[-9,35.5],b:1}]},
+'Pādahastāsana':{t:62,hd:80,L:[[90,90,0],[91,91,0]],A:[{to:[4,38],b:-1},{to:[5,38],b:-1}]},
+'Eka Pāda Rājakapotāsana':{t:-95,t2:-108,hd:-102,L:[[179,180,180],[8,172]],A:[{to:[5,1.5]},{to:[6,1.5]}]},
+'Gomukhāsana':{front:1,t:-90,hd:-90,L:[[12,176],[168,4]],A:[[-55,120],[125,-62]]},
+'Śīrṣāsana':{t:90,hd:90,L:[[-90,-90],[-91,-91]],A:[[114,0],[112,2]]},
+'Jānu Śīrṣāsana':{t:-16,hd:-4,L:[[0,0,-90],[6,176]],A:[{to:[37,-3],b:1},{to:[37,-2],b:1}]},
+'Uttānāsana':{t:62,hd:80,L:[[90,90,0],[91,91,0]],A:[[95,95],[97,97]]},
+'Utkaṭāsana':{t:-58,hd:-62,L:[[28,102,0],[30,103,0]],A:[[-66,-68],[-69,-71]]},
+'Daṇḍāsana':{t:-90,hd:-90,L:[[0,0,-90],[0,0,-90]],A:[{to:[3,1]},{to:[4,1]}]},
+'Caturaṅga Daṇḍāsana':{t:-8,hd:-12,L:[[172,172,100],[173,173,100]],A:[[172,90],[173,90]]},
+'Sūrya Namaskāra':{t:-90,hd:-90,L:[[90,90,0],[91,91,0]],A:[{to:[6,-14],b:1},{to:[6,-14],b:1}]},
+'Setu Bandha Sarvāṅgāsana':{t:146,hd:180,L:[[-18,100,0],[-16,101,0]],A:[[8,0],[6,0]]},
+'Padmāsana':{front:1,t:-90,hd:-90,L:[[14,172],[166,8]],A:[{to:[16,2],b:1},{to:[-16,2],b:-1}]},
+'Vajrāsana':{t:-90,hd:-90,L:[[6,184,180],[7,185,180]],A:[{to:[13,-1],b:-1},{to:[14,-1],b:-1}]},
+'Halāsana':{t:95,hd:4,L:[[52,52],[54,54]],A:[[172,180],[174,180]]},
+'Dhanurāsana':{t:-30,hd:-50,L:[[-162,-40],[-160,-42]],A:[{to:[-3,-19]},{to:[-2,-20]}]},
+'Ūrdhva Dhanurāsana':{t:-165,t2:150,hd:110,L:[[48,96,0],[50,97,0]],A:[{to:[-25,33.5]},{to:[-23,33.5]}]},
+'Cakrāsana':{t:-165,t2:150,hd:110,L:[[48,96,0],[50,97,0]],A:[{to:[-25,33.5]},{to:[-23,33.5]}]},
+'Bhujaṅgāsana':{t:-22,t2:-45,hd:-75,L:[[180,180,180],[180,180,180]],A:[{to:[15,1.5],b:1},{to:[16,1.5],b:1}]},
+'Bitilāsana':{t:-6,t2:-22,hd:-55,L:[[90,180,180],[91,180,180]],A:[[90,90],[92,90]]},
+'Mayūrāsana':{t:0,hd:4,L:[[180,180,180],[181,181,180]],A:[[170,90],[172,90]]},
+'Bakāsana':{t:35,hd:30,L:[[55,-158],[57,-156]],A:[[95,92],[97,92]]},
+'Śalabhāsana':{t:-18,hd:-25,L:[[-165,-165,180],[-163,-163,180]],A:[[176,182],[178,182]]},
+'Makarāsana':{t:0,hd:-3,L:[[180,180,180],[181,181,180]],A:[[-8,186],[-6,184]]},
+'Kūrmāsana':{t:-3,hd:2,L:[[-26,26,-90],[-24,24,-90]],A:[[178,180],[180,180]]},
+'Kapotāsana':{t:-125,t2:150,hd:100,L:[[90,180,180],[91,180,180]],A:[{to:[-20,17],b:1},{to:[-19,17.5],b:1}]},
+'Uṣṭrāsana':{t:-118,t2:178,hd:125,L:[[100,180],[101,180]],A:[{to:[-22,17]},{to:[-21,17]}]},
+'Vīrāsana':{t:-90,hd:-90,L:[[6,184,180],[7,185,180]],A:[{to:[16,-1],b:-1},{to:[17,-1],b:-1}]},
+'Vīrabhadrāsana I · II · III':{front:1,t:-90,hd:-90,L:[[10,90,0],[144,144,180]],A:[[0,0],[180,180]]},
+'Hanumānāsana':{t:-90,hd:-90,L:[[0,0,-90],[180,180,180]],A:[{to:[6,-14],b:1},{to:[6,-14],b:1}]},
+'Bharadvājāsana':{t:-90,hd:-90,L:[[12,168],[14,170]],A:[{to:[16,1],b:-1},{to:[-11,6],b:-1}]},
+'Marīcyāsana':{t:-30,hd:-20,L:[[0,0,-90],[-62,95,0]],A:[{to:[36,-3],b:1},{to:[35,-2],b:1}]}
+};
+function figPts(p){
+  const r=d=>d*Math.PI/180,mv=(o,a,l)=>[o[0]+l*Math.cos(r(a)),o[1]+l*Math.sin(r(a))];
+  const ik=(o,to,l1,l2,b)=>{const dx=to[0]-o[0],dy=to[1]-o[1];let d=Math.hypot(dx,dy);const base=Math.atan2(dy,dx);d=Math.min(d,l1+l2-0.01);
+    const c=Math.max(-1,Math.min(1,(l1*l1+d*d-l2*l2)/(2*l1*d)));const e=base+(b||1)*Math.acos(c);const el=[o[0]+l1*Math.cos(e),o[1]+l1*Math.sin(e)];
+    const a2=Math.atan2(to[1]-el[1],to[0]-el[0]);return [o,el,[el[0]+l2*Math.cos(a2),el[1]+l2*Math.sin(a2)]]};
+  const hip=[0,0],t2=p.t2==null?p.t:p.t2,mid=mv(hip,p.t,FL.B/2),sh=mv(mid,t2,FL.B/2),head=mv(sh,p.hd,FL.N+FL.R*.6);
+  const legs=p.L.map(l=>{const k=mv(hip,l[0],FL.T),a=mv(k,l[1],FL.S),pts=[hip,k,a];if(l[2]!=null)pts.push(mv(a,l[2],FL.Ft));return pts});
+  const arms=p.A.map(a=>Array.isArray(a)?(()=>{const e=mv(sh,a[0],FL.U);return [sh,e,mv(e,a[1],FL.F)]})():ik(sh,a.to,FL.U,FL.F,a.b));
+  return {torso:[hip,mid,sh],head,legs,arms};
+}
+function figSVG(name,cls){
+  const p=POSES[name];if(!p)return '';
+  const f=figPts(p),all=[...f.torso,...f.legs.flat(),...f.arms.flat()];
+  const sw=4.2,R=FL.R;
+  const xs=[...all.map(q=>q[0]),f.head[0]-R,f.head[0]+R],cx=(Math.min(...xs)+Math.max(...xs))/2;
+  const floor=Math.max(Math.max(...all.map(q=>q[1]))+sw/2,f.head[1]+R);
+  const ys=[...all.map(q=>q[1]),f.head[1]-R],top=Math.min(...ys)-sw;
+  let VW=Math.max(70,Math.max(...xs)-Math.min(...xs)+sw*2+10),VH=Math.max(52,floor-top+10);
+  if(VW/VH>92/72)VH=VW*72/92;else VW=VH*92/72;
+  const vb=[cx-VW/2,floor+5-VH,VW,VH];
+  const pl=(pts,o)=>`<polyline points="${pts.map(q=>q[0].toFixed(1)+','+q[1].toFixed(1)).join(' ')}"${o?' opacity=".42"':''}/>`;
+  const far=p.front?0:1;
+  return `<svg class="${cls||'fig'}" viewBox="${vb.map(v=>v.toFixed(1)).join(' ')}" role="img" aria-label="${name} 자세 그림"><g fill="none" stroke="currentColor" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round">`+
+    `<line x1="${(vb[0]+5).toFixed(1)}" y1="${(floor+1.2).toFixed(1)}" x2="${(vb[0]+vb[2]-5).toFixed(1)}" y2="${(floor+1.2).toFixed(1)}" stroke-width="1.4" opacity=".28"/>`+
+    (f.legs[1]?pl(f.legs[1],far):'')+(f.arms[1]?pl(f.arms[1],far):'')+pl(f.torso)+pl(f.legs[0])+pl(f.arms[0])+
+    `</g><circle cx="${f.head[0].toFixed(1)}" cy="${f.head[1].toFixed(1)}" r="${R}" fill="currentColor"/></svg>`;
+}
+
 function relHTML(w){
-  return w.ex.map(e=>`<div class="rel"><div class="rel-n">${esc(e.n)}</div><div class="rel-k">${esc(e.k)}</div><div class="parts">${e.p.map(p=>{
+  return w.ex.map(e=>`<div class="rel">${figSVG(e.n)}<div class="rel-b"><div class="rel-n">${esc(e.n)}</div><div class="rel-k">${esc(e.k)}</div><div class="parts">${e.p.map(p=>{
     if(Array.isArray(p))return `<span class="pt out"><span class="la">${esc(p[0])}</span> ${esc(p[1])}</span>`;
-    const x=BY[p];return `<span class="pt${x.id===w.id?' me':''}"><span class="la">${esc(x.s)}</span> ${esc(x.m)}</span>`}).join('')}<span class="pt out"><span class="la">āsana</span> 자세</span></div></div>`).join('');
+    const x=BY[p];return `<span class="pt${x.id===w.id?' me':''}"><span class="la">${esc(x.s)}</span> ${esc(x.m)}</span>`}).join('')}<span class="pt out"><span class="la">āsana</span> 자세</span></div></div></div>`).join('');
 }
 const nav=(title,right='')=>`<div class="nav"><button class="back" data-act="home">${ICON.back}처음</button><h2>${esc(title)}</h2><div style="justify-self:end">${right}</div></div>`;
 const dirBtn=()=>`<button class="navr" data-act="dir">${DIRS[S.dir]}</button>`;
