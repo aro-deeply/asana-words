@@ -3,7 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#F3F3F1">
+<meta name="theme-color" content="#F3F3F1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="아사나 단어장">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="description" content="요가 아사나 이름에 나오는 산스크리트어 41개를 카드, 퀴즈, 발음으로 외워요">
 <meta property="og:type" content="website">
 <meta property="og:title" content="아사나 단어장">
@@ -148,6 +156,13 @@ button:focus-visible{outline:2px solid var(--ink);outline-offset:2px;border-radi
 .done p{margin:0;color:var(--muted)}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--btn);color:var(--btn-ink);font-size:14px;padding:10px 16px;border-radius:14px;max-width:calc(100% - 32px);z-index:20;opacity:0;pointer-events:none;transition:opacity .2s}
 .toast.on{opacity:1}
+.install{background:var(--row);border-radius:18px;padding:14px 16px;display:flex;align-items:center;gap:12px}
+.install img{width:44px;height:44px;border-radius:11px;flex:none}
+.install .mid{flex:1;min-width:0;font-size:14px;line-height:1.45}
+.install .mid b{display:block;font-size:15px}
+.install .mid span{color:var(--muted)}
+.install .go{height:36px;padding:0 14px;border-radius:999px;background:var(--btn);color:var(--btn-ink);font-weight:700;font-size:14px;flex:none}
+.install .x{width:30px;height:30px;color:var(--muted);font-size:20px;line-height:1;flex:none}
 @media (prefers-reduced-motion: reduce){.inner,.bar i,.toast{transition:none}}
 </style>
 <style>html,body{margin:0}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}[hidden]{display:none!important}</style>
@@ -253,6 +268,7 @@ function home(){
     <div class="hello"><h1>아사나 단어장</h1><p>프린트에 있는 산스크리트어 41개</p></div>
     <div class="prog"><div class="prog-h"><b>${k} <span>/ 41 외웠어요</span></b><span>${k===41?'다 외웠어요':k?'계속 가 볼까요':'카드부터 시작해 보세요'}</span></div><div class="bar"><i style="width:${Math.round(k/41*100)}%"></i></div></div>
     <div class="two"><button class="btn pri" data-act="card" data-v="all">카드로 외우기</button><button class="btn" data-act="quiz" data-v="all">퀴즈 풀기</button></div>
+    ${installCard()}
     ${weak}
     <div class="label">분류별로 보기</div>
     <div class="group">${rows}</div>
@@ -347,6 +363,8 @@ document.addEventListener('click',e=>{
   const a=b.dataset.act,v=b.dataset.v,id=+b.dataset.id;
   if(a==='speak'){e.stopPropagation();speak(id);return}
   if(a==='home')return go('home');
+  if(a==='install'){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.finally(()=>{deferredPrompt=null;render()})}return}
+  if(a==='installHide'){installHidden=true;store.set('installHidden',true);return render()}
   if(a==='open'){S.scope=v;S.open.clear();S.hide=false;return go('list')}
   if(a==='card'){newDeck(v);return go('card')}
   if(a==='quiz'){newQuiz(v);return go('quiz')}
@@ -363,6 +381,21 @@ document.addEventListener('click',e=>{
   if(a==='reset'){if(!S.resetArm){S.resetArm=true;return render()}S.known.clear();S.weak.clear();save();S.resetArm=false;toast('기록을 지웠어요');return render()}
 });
 document.addEventListener('keydown',e=>{const c=e.target.closest&&e.target.closest('#card');if(c&&(e.key==='Enter'||e.key===' ')){e.preventDefault();S.deck.flip=!S.deck.flip;c.classList.toggle('flipped',S.deck.flip)}});
+/* 앱 설치 */
+const STANDALONE=(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true;
+const IOS=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+let deferredPrompt=null,installHidden=store.get('installHidden',false);
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;if(S.screen==='home')render()});
+window.addEventListener('appinstalled',()=>{deferredPrompt=null;toast('홈 화면에 설치했어요');if(S.screen==='home')render()});
+function installCard(){
+  if(STANDALONE||installHidden)return '';
+  const x='<button class="x" data-act="installHide" aria-label="설치 안내 닫기">×</button>';
+  if(deferredPrompt)return `<div class="install"><img src="icon-192.png" alt=""><div class="mid"><b>앱으로 설치하기</b><span>홈 화면에서 바로 열려요</span></div><button class="go" data-act="install">설치</button>${x}</div>`;
+  if(IOS)return `<div class="install"><img src="icon-192.png" alt=""><div class="mid"><b>앱처럼 쓰기</b><span>사파리 아래 공유 버튼 → 홈 화면에 추가</span></div>${x}</div>`;
+  return '';
+}
+if('serviceWorker' in navigator&&location.protocol==='https:'){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))}
+
 render();
 </script>
 
